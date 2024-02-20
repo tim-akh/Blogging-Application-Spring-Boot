@@ -21,13 +21,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
+        http.httpBasic()
+                .and()
                 .csrf().disable() // TODO: Check it out later
                 .authorizeRequests()
-                .antMatchers("/**").permitAll()
+                .antMatchers("/api/v1/**").permitAll()
                 .anyRequest()
-                .authenticated().and()
-                .formLogin();
+                .authenticated();
     }
 
     @Override

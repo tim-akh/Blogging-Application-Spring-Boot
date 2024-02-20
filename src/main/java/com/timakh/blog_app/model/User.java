@@ -3,6 +3,9 @@ package com.timakh.blog_app.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -25,20 +28,22 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "email")
-    //@NotNull
+    @NotNull
     private String email;
     @Column(name = "username")
-    //@NotNull
+    @NotNull
     private String username;
     @Column(name = "password")
-    //@NotNull
+    @NotNull
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
     @Column(name = "role")
     @Enumerated(EnumType.STRING)
-    //@NotNull
+    @NotNull
     private Role role;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("user")
     private List<Publication> publications;
 
     public User(String email, String username, String password, Role role) {

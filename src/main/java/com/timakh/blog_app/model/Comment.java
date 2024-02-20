@@ -5,6 +5,7 @@ import lombok.Data;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -19,7 +20,7 @@ public class Comment {
     private String content;
     @Column(name = "created_at")
     @NotNull
-    private Timestamp createdAt;
+    private LocalDateTime createdAt;
     @ManyToOne
     @JoinColumn(name = "publication_id", referencedColumnName = "id")
     private Publication publication;

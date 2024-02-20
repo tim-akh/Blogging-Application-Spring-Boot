@@ -11,6 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -35,21 +36,25 @@ public class UserService {
         userRepository.delete(user);
     }
 
-    public User findUserById(Long id) throws ResourceNotFoundException {
-        return userRepository.findUserById(id)
+    public User getUserById(Long id) throws ResourceNotFoundException {
+        return userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User with id=" + id + " was not found"));
     }
 
-
-
     public String signUpUser(User user) {
-        boolean userExists = userRepository.findUserByEmail(user.getEmail()).isPresent();
+        boolean userExists = userRepository.findByEmail(user.getEmail()).isPresent();
         if (userExists) throw new IllegalStateException(EMAIL_TAKEN_MSG);
         String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
         userRepository.save(user);
 
         return "Registration Worked";
+    }
+
+
+    public Optional<User> validUsernameAndPassword(String username, String password) {
+        return userRepository.findByUsername(username)
+                .filter(user -> passwordEncoder.matches(password, user.getPassword()));
     }
 
 }

@@ -3,11 +3,14 @@ package com.timakh.blog_app.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 
+@NoArgsConstructor
 @Data
 @Entity
 @Table(name = "publication", schema = "public")
@@ -24,13 +27,21 @@ public class Publication {
     private String content;
     @Column(name = "created_at")
     @NotNull
-    private Timestamp createdAt;
+    private LocalDateTime createdAt;
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @NotNull
+    @JsonIgnoreProperties("publications")
     private User user;
     @OneToMany(mappedBy = "publication", cascade = CascadeType.ALL)
     private List<Comment> comments;
     @OneToMany(mappedBy = "publication", cascade = CascadeType.ALL)
     private List<Vote> votes;
+
+    public Publication(String header, String content, LocalDateTime createdAt, User user) {
+        this.header = header;
+        this.content = content;
+        this.createdAt = createdAt;
+        this.user = user;
+    }
 }
