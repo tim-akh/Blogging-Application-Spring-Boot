@@ -1,7 +1,7 @@
 package com.timakh.blog_app.service;
 
 import com.timakh.blog_app.model.Role;
-import com.timakh.blog_app.model.dto.SignUpRequest;
+import com.timakh.blog_app.dto.SignUpRequest;
 import com.timakh.blog_app.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

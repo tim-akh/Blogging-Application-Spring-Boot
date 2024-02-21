@@ -4,9 +4,6 @@ import com.timakh.blog_app.exception.ResourceNotFoundException;
 import com.timakh.blog_app.model.User;
 import com.timakh.blog_app.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 

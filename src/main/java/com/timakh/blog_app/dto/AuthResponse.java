@@ -1,4 +1,4 @@
-package com.timakh.blog_app.model.dto;
+package com.timakh.blog_app.dto;
 
 import com.timakh.blog_app.model.Role;
 import lombok.AllArgsConstructor;
