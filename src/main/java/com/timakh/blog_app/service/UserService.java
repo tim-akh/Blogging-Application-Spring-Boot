@@ -1,5 +1,6 @@
 package com.timakh.blog_app.service;
 
+import com.timakh.blog_app.dto.AuthResponse;
 import com.timakh.blog_app.exception.ResourceNotFoundException;
 import com.timakh.blog_app.model.User;
 import com.timakh.blog_app.repository.UserRepository;
@@ -38,14 +39,14 @@ public class UserService {
                 .orElseThrow(() -> new ResourceNotFoundException("User with id=" + id + " was not found"));
     }
 
-    public String signUpUser(User user) {
+    public AuthResponse signUpUser(User user) {
         boolean userExists = userRepository.findByEmail(user.getEmail()).isPresent();
         if (userExists) throw new IllegalStateException(EMAIL_TAKEN_MSG);
         String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
         userRepository.save(user);
 
-        return "Registration Worked";
+        return new AuthResponse(user.getId(), user.getUsername(), user.getRole());
     }
 
 
