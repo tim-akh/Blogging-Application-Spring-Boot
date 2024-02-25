@@ -19,5 +19,6 @@ public class UserDto {
     private Role role;
     @JsonIgnoreProperties("user")
     private List<PublicationDto> publications;
-//    private List<Comment> comments;
+    //@JsonIgnoreProperties("user")
+    //private List<CommentDto> comments;
 }

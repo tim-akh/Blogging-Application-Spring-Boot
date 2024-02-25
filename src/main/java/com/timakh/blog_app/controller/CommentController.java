@@ -30,11 +30,8 @@ public class CommentController {
     @PostMapping
     public ResponseEntity<CommentDto> createComment(@RequestBody CommentDto commentDto) {
 
-        //Publication publication = publicationService.getPublicationById(commentDto.getPublication().getId());
-        //User user = userService.getUserById(commentDto.getUser().getId());
-
-        Publication publication = publicationService.getPublicationById(50L);
-        User user = userService.getUserById(22L);
+        Publication publication = publicationService.getPublicationById(commentDto.getPublication().getId());
+        User user = userService.getUserById(commentDto.getUser().getId());
 
         return new ResponseEntity<>(commentMapper.commentToCommentDto(commentService.saveComment(new Comment(
                 commentDto.getContent(),
