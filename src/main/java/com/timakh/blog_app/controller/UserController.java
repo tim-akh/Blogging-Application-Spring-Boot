@@ -42,9 +42,13 @@ public class UserController {
         );
     }
 
-    @GetMapping("{id}")
-    public ResponseEntity<UserDto> getUserById(@PathVariable Long id) throws ResourceNotFoundException {
-        return new ResponseEntity<>(userMapper.userToUserDto(userService.getUserById(id)), HttpStatus.OK);
+//    @GetMapping("{id}")
+//    public ResponseEntity<UserDto> getUserById(@PathVariable Long id) throws ResourceNotFoundException {
+//        return new ResponseEntity<>(userMapper.userToUserDto(userService.getUserById(id)), HttpStatus.OK);
+//    }
+    @GetMapping("{username}")
+    public ResponseEntity<UserDto> getUserByUsername(@PathVariable String username) throws ResourceNotFoundException {
+        return new ResponseEntity<>(userMapper.userToUserDto(userService.getUserByUsername(username)), HttpStatus.OK);
     }
 
     @PutMapping("{id}")

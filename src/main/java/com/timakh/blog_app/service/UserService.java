@@ -39,6 +39,11 @@ public class UserService {
                 .orElseThrow(() -> new ResourceNotFoundException("User with id=" + id + " was not found"));
     }
 
+    public User getUserByUsername(String username) throws ResourceNotFoundException {
+        return userRepository.findByUsername(username)
+                .orElseThrow(() -> new ResourceNotFoundException("User " + username + " was not found"));
+    }
+
     public AuthResponse signUpUser(User user) {
         boolean userExists = userRepository.findByEmail(user.getEmail()).isPresent();
         if (userExists) throw new IllegalStateException(EMAIL_TAKEN_MSG);

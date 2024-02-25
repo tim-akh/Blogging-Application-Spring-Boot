@@ -39,11 +39,9 @@ public class PublicationController {
 
     @PostMapping
     public ResponseEntity<PublicationDto> createPublication(@RequestBody PublicationDto publicationDto) {
-        //CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder
-        //        .getContext().getAuthentication().getPrincipal();
-        //User user = userService.getUserById(userDetails.getId());
-        // Default user
-        User user = userService.getUserById(11L);
+
+        User user = userService.getUserById(publicationDto.getUser().getId());
+
         return new ResponseEntity<>(
                 publicationMapper.publicationToPublicationDto(publicationService.savePublication(new Publication(
                 publicationDto.getHeader(),

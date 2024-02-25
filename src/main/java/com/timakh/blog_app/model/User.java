@@ -41,13 +41,12 @@ public class User {
     @Enumerated(EnumType.STRING)
     @NotNull
     private Role role;
-
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonIgnoreProperties("user")
     private List<Publication> publications;
-//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-//    @JsonIgnoreProperties("user")
-//    private List<Comment> comments;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("user")
+    private List<Comment> comments;
 
     public User(String email, String username, String password, Role role) {
         this.email = email;
