@@ -11,7 +11,6 @@ import com.timakh.blog_app.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -49,5 +48,24 @@ public class CommentController {
                 commentMapper.commentToCommentDto(commentService.getCommentById(id)),
                 HttpStatus.OK
         );
+    }
+
+    @PutMapping("{id}")
+    public ResponseEntity<CommentDto> updateComment(@PathVariable Long id, @RequestBody CommentDto commentDto) {
+        Comment comment = commentService.getCommentById(id);
+
+        comment.setContent(commentDto.getContent());
+
+        return new ResponseEntity<>(
+                commentMapper.commentToCommentDto(commentService.saveComment(comment)),
+                HttpStatus.OK
+        );
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<CommentDto> deleteComment(@PathVariable Long id) {
+        Comment comment = commentService.getCommentById(id);
+        commentService.deleteComment(comment);
+        return new ResponseEntity<>(commentMapper.commentToCommentDto(comment), HttpStatus.OK);
     }
 }
