@@ -14,6 +14,11 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> catchResourceNotFoundException(ResourceNotFoundException e) {
         return new ResponseEntity<>(new ErrorResponse(new Date(), HttpStatus.NOT_FOUND.value(), e.getMessage()), HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler
+    public ResponseEntity<ErrorResponse> catchEmptyVoteException(EmptyVoteException e) {
+        return new ResponseEntity<>(new ErrorResponse(new Date(), HttpStatus.NO_CONTENT.value(), e.getMessage()), HttpStatus.NO_CONTENT);
+    }
 }
 
 

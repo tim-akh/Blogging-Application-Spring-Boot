@@ -31,11 +31,12 @@ public class Publication {
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @NotNull
-    @JsonIgnoreProperties("publications")
+    @JsonIgnoreProperties({"publications", "comments"})
     private User user;
     @OneToMany(mappedBy = "publication", cascade = CascadeType.ALL)
     private List<Comment> comments;
     @OneToMany(mappedBy = "publication", cascade = CascadeType.ALL)
+    @JsonIgnoreProperties({"publication", "comment"})
     private List<Vote> votes;
 
     public Publication(String header, String content, LocalDateTime createdAt, User user) {

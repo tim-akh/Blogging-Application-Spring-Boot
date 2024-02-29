@@ -1,5 +1,6 @@
 package com.timakh.blog_app.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.timakh.blog_app.model.Comment;
 import com.timakh.blog_app.model.User;
@@ -19,5 +20,6 @@ public class PublicationDto {
     private User user;
     @JsonIgnoreProperties("publication")
     private List<Comment> comments;
+    @JsonIgnoreProperties({"publication", "comment"})
     private List<Vote> votes;
 }

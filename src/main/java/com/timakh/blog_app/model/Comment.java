@@ -34,6 +34,7 @@ public class Comment {
     @JsonIgnoreProperties({"publications", "comments"})
     private User user;
     @OneToMany(mappedBy = "comment", cascade = CascadeType.ALL)
+    @JsonIgnoreProperties({"publication", "comment"})
     private List<Vote> votes;
 
     public Comment(String content, LocalDateTime createdAt, Publication publication, User user) {

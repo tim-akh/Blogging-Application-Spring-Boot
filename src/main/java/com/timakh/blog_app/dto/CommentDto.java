@@ -18,6 +18,7 @@ public class CommentDto {
     private PublicationDto publication;
     @JsonIgnoreProperties({"publications", "comments"})
     private User user;
+    @JsonIgnoreProperties({"publication", "comment"})
     private List<Vote> votes;
 
 }
