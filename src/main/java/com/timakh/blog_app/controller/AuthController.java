@@ -28,7 +28,9 @@ public class AuthController {
         Optional<User> userOptional = userService.validUsernameAndPassword(loginRequest.getUsername(), loginRequest.getPassword());
         if (userOptional.isPresent()) {
             User user = userOptional.get();
-            return new ResponseEntity<>(new AuthResponse(user.getId(), user.getUsername(), user.getRole()), HttpStatus.OK);
+            if (!user.isBanned()) {
+                return new ResponseEntity<>(new AuthResponse(user.getId(), user.getUsername(), user.getRole()), HttpStatus.OK);
+            }
         }
         return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     }

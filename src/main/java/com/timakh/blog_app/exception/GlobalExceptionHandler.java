@@ -16,7 +16,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler
-    public ResponseEntity<ErrorResponse> catchEmptyVoteException(EmptyVoteException e) {
+    public ResponseEntity<ErrorResponse> catchEmptyAddressException(EmptyAddressException e) {
         return new ResponseEntity<>(new ErrorResponse(new Date(), HttpStatus.NO_CONTENT.value(), e.getMessage()), HttpStatus.NO_CONTENT);
     }
 }

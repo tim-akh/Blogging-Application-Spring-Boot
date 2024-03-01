@@ -2,7 +2,7 @@ package com.timakh.blog_app.controller;
 
 import com.timakh.blog_app.dto.UserDto;
 import com.timakh.blog_app.dto.VoteDto;
-import com.timakh.blog_app.exception.EmptyVoteException;
+import com.timakh.blog_app.exception.EmptyAddressException;
 import com.timakh.blog_app.mapper.VoteMapper;
 import com.timakh.blog_app.model.Comment;
 import com.timakh.blog_app.model.Publication;
@@ -36,16 +36,6 @@ public class VoteController {
     private final VoteMapper voteMapper;
 
 
-    @GetMapping
-    public ResponseEntity<List<VoteDto>> getAllVotes() {
-        return new ResponseEntity<>(
-                voteService.getAllVotes()
-                        .stream()
-                        .map(voteMapper::voteToVoteDto)
-                        .collect(Collectors.toList()), HttpStatus.OK);
-    }
-
-
     @PostMapping
     public ResponseEntity<VoteDto> createVote(@RequestBody VoteDto voteDto) {
 
@@ -57,20 +47,7 @@ public class VoteController {
             publication = publicationService.getPublicationById(voteDto.getPublication().getId());
         } else if (voteDto.getComment() != null) {
             comment = commentService.getCommentById(voteDto.getComment().getId());
-        } else throw new EmptyVoteException("Vote does not address any content");
-
-//        Vote existingVote = voteService.getVoteByUserAndPublicationAndComment(user, publication, comment);
-//
-//        if (existingVote != null) {
-//            return new ResponseEntity<>(
-//                    voteMapper.voteToVoteDto(voteService.saveVote(new Vote(
-//                                    user,
-//                                    1,
-//                                    publication,
-//                                    null
-//                            )
-//                    )), HttpStatus.OK);
-//        }
+        } else throw new EmptyAddressException("Vote does not address any content");
 
         return new ResponseEntity<>(
                 voteMapper.voteToVoteDto(voteService.saveVote(new Vote(

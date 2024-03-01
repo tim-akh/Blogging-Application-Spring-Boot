@@ -41,6 +41,9 @@ public class User {
     @Enumerated(EnumType.STRING)
     @NotNull
     private Role role;
+    @Column(name = "banned")
+    @NotNull
+    private boolean banned;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonIgnoreProperties("user")
     private List<Publication> publications;
@@ -48,11 +51,11 @@ public class User {
     @JsonIgnoreProperties("user")
     private List<Comment> comments;
 
-    public User(String email, String username, String password, Role role) {
+    public User(String email, String username, String password, Role role, boolean banned) {
         this.email = email;
         this.username = username;
         this.password = password;
         this.role = role;
+        this.banned = banned;
     }
-
 }

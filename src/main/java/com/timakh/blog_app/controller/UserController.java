@@ -57,8 +57,9 @@ public class UserController {
 
         user.setEmail(userDto.getEmail());
         user.setUsername(userDto.getUsername());
-        user.setPassword(userDto.getPassword());
+        //user.setPassword(userDto.getPassword());
         user.setRole(userDto.getRole());
+        user.setBanned(userDto.isBanned());
         return new ResponseEntity<>(userMapper.userToUserDto(userService.saveUser(user)), HttpStatus.OK);
     }
 
