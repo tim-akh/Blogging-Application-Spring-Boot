@@ -19,7 +19,7 @@ public class AuthService {
                 request.getEmail(),
                 request.getUsername(),
                 request.getPassword(),
-                Role.USER,
+                Role.ROLE_USER,
                 false
         ));
     }

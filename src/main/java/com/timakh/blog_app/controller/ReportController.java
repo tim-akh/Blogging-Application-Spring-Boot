@@ -11,6 +11,7 @@ import com.timakh.blog_app.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,6 +30,7 @@ public class ReportController {
     private final ReportMapper reportMapper;
 
     @GetMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<ReportDto>> getAllReports() {
         return new ResponseEntity<>(
                 reportMapper.reportListToReportDtoList(reportService.getAllReports()),
@@ -37,6 +39,7 @@ public class ReportController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<ReportDto> createReport(@RequestBody ReportDto reportDto) {
 
         User user = userService.getUserById(reportDto.getUser().getId());
@@ -61,6 +64,7 @@ public class ReportController {
     }
 
     @DeleteMapping("{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ReportDto> deleteReport(@PathVariable Long id) {
         Report report = reportService.getReportById(id);
         reportService.deleteReport(report);

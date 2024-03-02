@@ -11,6 +11,7 @@ import com.timakh.blog_app.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -27,6 +28,7 @@ public class CommentController {
     private final CommentMapper commentMapper;
 
     @PostMapping
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     public ResponseEntity<CommentDto> createComment(@RequestBody CommentDto commentDto) {
 
         Publication publication = publicationService.getPublicationById(commentDto.getPublication().getId());
@@ -43,6 +45,7 @@ public class CommentController {
     }
 
     @GetMapping("{id}")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<CommentDto> getCommentById(@PathVariable Long id) {
         return new ResponseEntity<>(
                 commentMapper.commentToCommentDto(commentService.getCommentById(id)),
@@ -51,6 +54,7 @@ public class CommentController {
     }
 
     @PutMapping("{id}")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     public ResponseEntity<CommentDto> updateComment(@PathVariable Long id, @RequestBody CommentDto commentDto) {
         Comment comment = commentService.getCommentById(id);
 
@@ -63,6 +67,7 @@ public class CommentController {
     }
 
     @DeleteMapping("{id}")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     public ResponseEntity<CommentDto> deleteComment(@PathVariable Long id) {
         Comment comment = commentService.getCommentById(id);
         commentService.deleteComment(comment);

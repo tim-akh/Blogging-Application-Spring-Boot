@@ -8,6 +8,7 @@ import com.timakh.blog_app.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,6 +24,7 @@ public class UserController {
     private final UserMapper userMapper;
 
     @GetMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<UserDto>> getAllUsers() {
         return new ResponseEntity<>(
 //                userService.getAllUsers()
@@ -35,6 +37,7 @@ public class UserController {
     }
 
     @PostMapping
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto) {
         return new ResponseEntity<>(
                 userMapper.userToUserDto(userService.saveUser(userMapper.userDtoToUser(userDto))),
@@ -52,6 +55,7 @@ public class UserController {
     }
 
     @PutMapping("{id}")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     public ResponseEntity<UserDto> updateUser(@PathVariable Long id, @RequestBody UserDto userDto) {
         User user = userService.getUserById(id);
 
@@ -64,6 +68,7 @@ public class UserController {
     }
 
     @DeleteMapping("{id}")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     public ResponseEntity<UserDto> deleteUser(@PathVariable Long id) {
         User user = userService.getUserById(id);
         userService.deleteUser(user);

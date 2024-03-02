@@ -10,10 +10,10 @@ import com.timakh.blog_app.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @RestController
@@ -38,6 +38,7 @@ public class PublicationController {
     }
 
     @PostMapping
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     public ResponseEntity<PublicationDto> createPublication(@RequestBody PublicationDto publicationDto) {
 
         User user = userService.getUserById(publicationDto.getUser().getId());
@@ -63,6 +64,7 @@ public class PublicationController {
 
 
     @PutMapping("{id}")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     public ResponseEntity<PublicationDto> updatePublication(@PathVariable Long id,
                                                             @RequestBody PublicationDto publicationDto) {
         Publication publication = publicationService.getPublicationById(id);
@@ -78,6 +80,7 @@ public class PublicationController {
     }
 
     @DeleteMapping("{id}")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     public ResponseEntity<PublicationDto> deletePublication(@PathVariable Long id) {
         Publication publication = publicationService.getPublicationById(id);
         publicationService.deletePublication(publication);

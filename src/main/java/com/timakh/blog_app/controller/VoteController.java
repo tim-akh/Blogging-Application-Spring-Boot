@@ -15,6 +15,7 @@ import com.timakh.blog_app.service.VoteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -37,6 +38,7 @@ public class VoteController {
 
 
     @PostMapping
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     public ResponseEntity<VoteDto> createVote(@RequestBody VoteDto voteDto) {
 
         User user = userService.getUserById(voteDto.getUser().getId());
@@ -61,6 +63,7 @@ public class VoteController {
     }
 
     @PutMapping("{id}")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     public ResponseEntity<VoteDto> updateVote(@PathVariable Long id, @RequestBody VoteDto voteDto) {
         Vote vote = voteService.getVoteById(id);
 
@@ -71,6 +74,7 @@ public class VoteController {
 
 
     @DeleteMapping("{id}")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     public ResponseEntity<VoteDto> deleteVote(@PathVariable Long id) {
         Vote vote = voteService.getVoteById(id);
         voteService.deleteVote(vote);
