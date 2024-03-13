@@ -149,15 +149,15 @@ public class CommentIntTest {
                 .thenAnswer((invocation) -> invocation.getArgument(0));
 
         mvc.perform(put(COMMENTS_BASE_URL + "/" + id)
-                        .contentType(MediaType.APPLICATION_JSON_UTF8)
-                        .content(objectMapper.writeValueAsString(comment)))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("id").value(comment.getId()))
-                .andExpect(jsonPath("content").value(comment.getContent()))
-                .andExpect(jsonPath("createdAt").value(comment.getCreatedAt().toString()))
-                .andExpect(jsonPath("publication.id").value(comment.getPublication().getId()))
-                .andExpect(jsonPath("user.id").value(comment.getUser().getId()))
-                .andExpect(jsonPath("votes.size()").value(comment.getVotes().size()));
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content(objectMapper.writeValueAsString(comment)))
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("id").value(comment.getId()))
+                    .andExpect(jsonPath("content").value(comment.getContent()))
+                    .andExpect(jsonPath("createdAt").value(comment.getCreatedAt().toString()))
+                    .andExpect(jsonPath("publication.id").value(comment.getPublication().getId()))
+                    .andExpect(jsonPath("user.id").value(comment.getUser().getId()))
+                    .andExpect(jsonPath("votes.size()").value(comment.getVotes().size()));
 
     }
 
@@ -180,9 +180,9 @@ public class CommentIntTest {
         when(commentService.getCommentById(id)).thenThrow(ResourceNotFoundException.class);
 
         mvc.perform(put(COMMENTS_BASE_URL + "/" + id)
-                        .contentType(MediaType.APPLICATION_JSON_UTF8)
-                        .content(objectMapper.writeValueAsString(comment)))
-                .andExpect(status().isNotFound());
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content(objectMapper.writeValueAsString(comment)))
+                    .andExpect(status().isNotFound());
     }
 
     @Test

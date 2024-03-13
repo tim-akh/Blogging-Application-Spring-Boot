@@ -17,10 +17,6 @@ public class VoteService {
 
     private final VoteRepository voteRepository;
 
-    public List<Vote> getAllVotes() {
-        return voteRepository.findAll();
-    }
-
     public Vote saveVote(Vote vote) {
         return voteRepository.save(vote);
     }
@@ -32,11 +28,6 @@ public class VoteService {
     public Vote getVoteById(Long id) {
         return voteRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Vote with id=" + id + " was not found"));
-    }
-
-    public Vote getVoteByUserAndPublicationAndComment(User user, Publication publication, Comment comment) {
-        return voteRepository.findByUserAndPublicationAndComment(user, publication, comment)
-                .orElse(null);
     }
 
 }
