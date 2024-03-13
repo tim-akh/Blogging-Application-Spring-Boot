@@ -15,7 +15,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 
 
 import java.util.ArrayList;
@@ -40,11 +39,12 @@ public class UserIntTest {
 
     @Autowired
     private MockMvc mvc;
-
     @Autowired
     private ObjectMapper objectMapper;
 
     private List<User> users;
+
+
 
     @BeforeEach
     void setUp() {
@@ -76,9 +76,6 @@ public class UserIntTest {
                 false, new ArrayList<>(), new ArrayList<>());
 
         when(userService.getUserByUsername(username)).thenReturn(user);
-
-        MvcResult result = mvc.perform(get(USERS_BASE_URL + "/" + username)).andReturn();
-        System.out.println(result.getResponse().getContentAsString());
 
         mvc.perform(get(USERS_BASE_URL + "/" + username))
                 .andExpect(status().isOk())
@@ -125,14 +122,14 @@ public class UserIntTest {
     @WithMockUser(roles = "USER")
     void shouldUpdateUser() throws Exception {
 
-        final Long userId = 1L;
+        final Long id = 1L;
         final User user = new User(1L, "email1@ya.ru", "usr1", "pass", Role.ROLE_USER,
                 false, new ArrayList<>(), new ArrayList<>());
 
-        when(userService.getUserById(userId)).thenReturn(user);
+        when(userService.getUserById(id)).thenReturn(user);
         when(userService.saveUser(any(User.class))).thenAnswer((invocation) -> invocation.getArgument(0));
 
-        mvc.perform(put(USERS_BASE_URL + "/" + userId)
+        mvc.perform(put(USERS_BASE_URL + "/" + id)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(objectMapper.writeValueAsString(user)))
                     .andExpect(status().isOk())
@@ -148,13 +145,13 @@ public class UserIntTest {
     @WithMockUser(roles = "USER")
     void shouldReturn404WhenUpdatingNonExistingUser() throws Exception {
 
-        final Long userId = 1L;
+        final Long id = 1L;
         final User user = new User(1L, "email1@ya.ru", "usr1", "pass", Role.ROLE_USER,
                 false, new ArrayList<>(), new ArrayList<>());
 
-        when(userService.getUserById(userId)).thenThrow(ResourceNotFoundException.class);
+        when(userService.getUserById(id)).thenThrow(ResourceNotFoundException.class);
 
-        mvc.perform(put(USERS_BASE_URL + "/" + userId)
+        mvc.perform(put(USERS_BASE_URL + "/" + id)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(objectMapper.writeValueAsString(user)))
                     .andExpect(status().isNotFound());
@@ -163,14 +160,14 @@ public class UserIntTest {
     @Test
     @WithMockUser(roles = "USER")
     void shouldDeleteUser() throws Exception {
-        final Long userId = 1L;
+        final Long id = 1L;
         final User user = new User(1L, "email1@ya.ru", "usr1", "pass", Role.ROLE_USER,
                 false, new ArrayList<>(), new ArrayList<>());
 
-        when(userService.getUserById(userId)).thenReturn(user);
+        when(userService.getUserById(id)).thenReturn(user);
         doNothing().when(userService).deleteUser(user);
 
-        mvc.perform(delete(USERS_BASE_URL + "/" + userId))
+        mvc.perform(delete(USERS_BASE_URL + "/" + id))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("email").value(user.getEmail()))
                 .andExpect(jsonPath("username").value(user.getUsername()))
@@ -183,11 +180,11 @@ public class UserIntTest {
     @Test
     @WithMockUser(roles = "USER")
     void shouldReturn404WhenDeletingNonExistingUser() throws Exception {
-        final Long userId = 1L;
+        final Long id = 1L;
 
-        when(userService.getUserById(userId)).thenThrow(ResourceNotFoundException.class);
+        when(userService.getUserById(id)).thenThrow(ResourceNotFoundException.class);
 
-        mvc.perform(delete(USERS_BASE_URL + "/" + userId))
+        mvc.perform(delete(USERS_BASE_URL + "/" + id))
                 .andExpect(status().isNotFound());
     }
 

@@ -61,7 +61,7 @@ public class UserServiceTest {
         final User user = new User(1L, "email1@ya.ru", "usr1", "pass", Role.ROLE_USER,
                 false, new ArrayList<>(), new ArrayList<>());
 
-        when(userRepository.findById(1L)).thenReturn(Optional.of(user));
+        when(userRepository.findById(id)).thenReturn(Optional.of(user));
 
         final Optional<User> expectedOptional = Optional.ofNullable(underTest.getUserById(id));
 
