@@ -15,8 +15,8 @@ This is a REST API for a blogging application providing you with such opportunit
 
 |HTTP Method|URL|Description|
 |---|---|---|
-|`POST`|http://localhost:8000/api/v1/auth/signin | Sign In With Username and Password |
-|`POST`|http://localhost:8000/api/v1/auth/signup | Sign Up With Username, Email, and Password |
+|`POST`|http://localhost:8000/api/v1/auth/signin | Sign In With Username |
+|`POST`|http://localhost:8000/api/v1/auth/signup | Sign Up |
 
 #### User Service
 
