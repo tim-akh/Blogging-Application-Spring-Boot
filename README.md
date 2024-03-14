@@ -6,7 +6,7 @@ This is a REST API for a blogging application providing you with such opportunit
 
 ## Roles
 
-**USER**: Basic functional + Reporting inappropriate content
+**USER**: Basic functional + Reporting inappropriate content \\
 **ADMIN**: Basic functional + Banning users + Deleting inappropriate content
 
 ## Endpoints
