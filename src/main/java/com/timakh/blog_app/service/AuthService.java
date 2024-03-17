@@ -13,7 +13,6 @@ public class AuthService {
 
     private final UserService userService;
 
-
     public AuthResponse register(SignUpRequest request) {
         return userService.signUpUser(new User(
                 request.getEmail(),
@@ -23,4 +22,5 @@ public class AuthService {
                 false
         ));
     }
+
 }

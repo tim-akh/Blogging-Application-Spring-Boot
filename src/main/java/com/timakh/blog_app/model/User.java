@@ -51,7 +51,7 @@ public class User {
 
     @Column(name = "banned")
     @NotNull
-    private boolean banned;
+    private Boolean banned;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonIgnoreProperties("user")

@@ -9,7 +9,6 @@ import com.timakh.blog_app.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -23,14 +22,15 @@ public class AuthController {
     private final AuthService authService;
     private final UserService userService;
 
-
     @PostMapping("/signin")
     public ResponseEntity<AuthResponse> signIn( @RequestBody LoginRequest loginRequest) {
         Optional<User> userOptional = userService.validUsernameAndPassword(loginRequest.getUsername(), loginRequest.getPassword());
         if (userOptional.isPresent()) {
             User user = userOptional.get();
-            if (!user.isBanned()) {
+            if (!user.getBanned()) {
                 return new ResponseEntity<>(new AuthResponse(user.getId(), user.getUsername(), user.getRole()), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
             }
         }
         return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
@@ -40,4 +40,5 @@ public class AuthController {
     public ResponseEntity<AuthResponse> signUp(@RequestBody SignUpRequest request) {
         return new ResponseEntity<>(authService.register(request), HttpStatus.OK);
     }
+
 }
