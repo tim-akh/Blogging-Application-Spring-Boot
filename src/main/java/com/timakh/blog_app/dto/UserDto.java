@@ -17,7 +17,7 @@ public class UserDto {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
     private Role role;
-    private boolean banned;
+    private Boolean banned;
     @JsonIgnoreProperties("user")
     private List<PublicationDto> publications;
     //@JsonIgnoreProperties("user")

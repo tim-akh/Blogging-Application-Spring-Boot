@@ -21,22 +21,28 @@ public class Publication {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(name = "header")
     @NotNull
     private String header;
+
     @Column(name = "content", length = 65535)
     @NotNull
     private String content;
+
     @Column(name = "created_at")
     @NotNull
     private LocalDateTime createdAt;
+
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @NotNull
     @JsonIgnoreProperties({"publications", "comments"})
     private User user;
+
     @OneToMany(mappedBy = "publication", cascade = CascadeType.ALL)
     private List<Comment> comments;
+
     @OneToMany(mappedBy = "publication", cascade = CascadeType.ALL)
     @JsonIgnoreProperties({"publication", "comment"})
     private List<Vote> votes;

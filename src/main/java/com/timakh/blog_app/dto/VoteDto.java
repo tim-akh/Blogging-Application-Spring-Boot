@@ -11,7 +11,7 @@ public class VoteDto {
     private Long id;
     @JsonIgnoreProperties({"publications", "comments"})
     private User user;
-    private int dynamic;
+    private Integer dynamic;
     @JsonIgnoreProperties({"user", "comments", "votes"})
     private PublicationDto publication;
     @JsonIgnoreProperties({"user", "publication", "votes"})

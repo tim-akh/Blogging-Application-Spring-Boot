@@ -26,34 +26,42 @@ import java.util.List;
         @UniqueConstraint(columnNames = "email")
 })
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(name = "email")
     @NotNull
     private String email;
+
     @Column(name = "username")
     @NotNull
     private String username;
+
     @Column(name = "password")
     @NotNull
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
+
     @Column(name = "role")
     @Enumerated(EnumType.STRING)
     @NotNull
     private Role role;
+
     @Column(name = "banned")
     @NotNull
     private boolean banned;
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonIgnoreProperties("user")
     private List<Publication> publications;
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonIgnoreProperties("user")
     private List<Comment> comments;
 
-    public User(String email, String username, String password, Role role, boolean banned) {
+    public User(String email, String username, String password, Role role, Boolean banned) {
         this.email = email;
         this.username = username;
         this.password = password;

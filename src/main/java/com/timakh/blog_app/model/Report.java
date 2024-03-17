@@ -14,20 +14,25 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(name = "report", schema = "public")
 public class Report {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(name = "reason")
     @NotNull
     private String reason;
+
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @NotNull
     @JsonIgnoreProperties({"publications", "comments"})
     private User user;
+
     @ManyToOne
     @JoinColumn(name = "publication_id", referencedColumnName = "id")
     private Publication publication;
+
     @ManyToOne
     @JoinColumn(name = "comment_id", referencedColumnName = "id")
     private Comment comment;

@@ -16,25 +16,30 @@ import javax.validation.constraints.NotNull;
         @UniqueConstraint(columnNames = { "user_id", "publication_id", "comment_id" })
 })
 public class Vote {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @NotNull
     @JsonIgnoreProperties({"publications", "comments"})
     private User user;
+
     @Column(name = "dynamic")
     @NotNull
-    private int dynamic;
+    private Integer dynamic;
+
     @ManyToOne
     @JoinColumn(name = "publication_id", referencedColumnName = "id")
     private Publication publication;
+
     @ManyToOne
     @JoinColumn(name = "comment_id", referencedColumnName = "id")
     private Comment comment;
 
-    public Vote(User user, int dynamic, Publication publication, Comment comment) {
+    public Vote(User user, Integer dynamic, Publication publication, Comment comment) {
         this.user = user;
         this.dynamic = dynamic;
         this.publication = publication;

@@ -17,24 +17,30 @@ import java.util.List;
 @Entity
 @Table(name = "comment", schema = "public")
 public class Comment {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(name = "content", length = 255)
     @NotNull
     private String content;
+
     @Column(name = "created_at")
     @NotNull
     private LocalDateTime createdAt;
+
     @ManyToOne
     @JoinColumn(name = "publication_id", referencedColumnName = "id")
     @NotNull
     private Publication publication;
+
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @NotNull
     @JsonIgnoreProperties({"publications", "comments"})
     private User user;
+
     @OneToMany(mappedBy = "comment", cascade = CascadeType.ALL)
     @JsonIgnoreProperties({"publication", "comment"})
     private List<Vote> votes;
